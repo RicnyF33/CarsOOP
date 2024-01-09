@@ -1,0 +1,116 @@
+//
+// Created by Standard on 08.01.2024.
+//
+
+#include "Car.h"
+//
+// Created by Standard on 08.01.2024.
+//
+
+#include "car.h"
+#include "regex"
+#include <string>
+#include <iostream>
+#include <ostream>
+#include <ctime>
+Car::Car() {
+    SPZ = "NO_SPZ";
+    spotrebaPaliva = 5;
+    rokVyroby =2000;
+}
+
+bool Car::setSPZ(const std::string SPZ) {
+    if (SPZCheck(SPZ)) {
+        this->SPZ= SPZ;
+        return true;
+    }
+    std::cout << "Chybna SPZ" << std::endl;
+    return false;
+
+}
+
+Car::~Car() {
+
+}
+
+std::ostream &operator<<(std::ostream &os, const Car &car) {
+    os << "SPZ: " << car.getSPZ() << std::endl;
+    os << "Spotreba: " << car.getSpotreba() << " litru na 100 km" << std::endl;
+    os << "Rok vyroby: " << car.getRokVyroby() << std::endl;
+    os << "Stari vozu v letech: " << car.AktualniRok() << std::endl;
+    return os;
+}
+
+std::string Car::getSPZ() const {
+    return this->SPZ;
+}
+
+float Car::getSpotreba() const {
+
+    return this->spotrebaPaliva;
+}
+
+int Car::getRokVyroby() const {
+    return this->rokVyroby;
+}
+
+
+
+bool Car::SPZCheck(const std::string SPZ) const {
+    std::regex regexpattern("^[A-FH-NPR-TV-Y0-9]{7}$");
+    return std::regex_match(SPZ, regexpattern);
+}
+
+Car::Car(const std::string SPZ, const float spotreba, const int vyroba) {
+    setSPZ(SPZ);
+    setSpotreba(spotreba);
+    setRok(vyroba);
+}
+
+bool Car::SpotrebaCheck(float spotreba) const {
+        return spotreba >0;
+}
+
+bool Car::setSpotreba(float spotreba) {
+    if (SpotrebaCheck(spotreba)) {
+        this->spotrebaPaliva= spotreba;
+        return true;
+    }
+    std::cout << "Spotreba musi byt kladne cislo" << std::endl;
+    return false;
+}
+
+bool Car::setRok(const int vyroba) {
+    if (VyrobaCheck(vyroba)) {
+        this->rokVyroby= vyroba;
+        return true;
+    }
+    std::cout << "Rok vyroby musi byt novejsi nez 1900 a starsi nez aktualni" << std::endl;
+
+    return false;
+}
+
+bool Car::VyrobaCheck(const int vyroba) const {
+    std::time_t systemTime = std::time(nullptr);
+    std::tm* currentTime = std::localtime(&systemTime);
+    int currentYear = currentTime->tm_year + 1900;
+    if(vyroba>=1900 && vyroba <=currentYear){
+        return true;
+    }
+    return false;
+}
+
+int Car::AktualniRok() const{
+    std::time_t systemTime = std::time(nullptr);
+    std::tm* currentTime = std::localtime(&systemTime);
+    int currentYear = currentTime->tm_year + 1900;
+    return currentYear - this->rokVyroby;
+}
+
+Car::Car(const Car & car) {
+    setSPZ(car.getSPZ());
+    setSpotreba(car.getSpotreba());
+    setRok(car.getRokVyroby());
+}
+
+

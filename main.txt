@@ -1,0 +1,31 @@
+#include <iostream>
+#include "Car.h"
+int main() {
+    std::string SPZ;
+    float spotreba;
+    int vyroba;
+    Car car;
+    Car car2("986A656",1.5,1900);
+    Car car3(car);
+    Car car4;
+    std::cout <<"objekt vytvoren konstruktorem bez parametru\n"
+    <<"---------------------------------\n"<<car<<"objekt vytvoren konstruktorem s parametrem\n"<<"---------------------------------\n"<<car2<<std::endl;
+    std::cout <<"uzivatelske vstupy\n"
+              <<"------------------"<<std::endl;
+    do {
+        do {
+            std::cout << "Zadej SPZ auta:";
+            std::cin >> SPZ;
+
+        }while(!car4.setSPZ(SPZ));
+        do {
+        std::cout << "Zadej aktualni spotrebu paliva na 100 km:";
+        std::cin >> spotreba;
+        }while(!car4.setSpotreba(spotreba));
+        do {
+        std::cout << "Zadej rok vyroby:";
+        std::cin >> vyroba;
+        }while(!car4.setRok(vyroba));
+    }while(true);
+    return 0;
+}

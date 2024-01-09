@@ -1,0 +1,36 @@
+//
+// Created by Standard on 08.01.2024.
+//
+
+#ifndef AUTO_CAR_H
+#define AUTO_CAR_H
+#include <string>
+#include <ostream>
+
+const std::string defaultSPZ ="B666666";
+
+class Car {
+public:
+    Car();
+    Car(const std::string, const float, const int);
+    Car(const Car &);
+    virtual ~Car();
+    std::string getSPZ()const;
+    float getSpotreba()const;
+    int getRokVyroby()const;
+    bool setSPZ(const std::string);
+    bool setSpotreba(const float);
+    bool setRok(const int);
+    int AktualniRok()const ;
+private:
+    std::string SPZ;
+    float spotrebaPaliva;
+    int rokVyroby;
+    bool SPZCheck(const std::string)const;
+    bool SpotrebaCheck(const float)const;
+    bool VyrobaCheck(const int)const;
+
+ friend std::ostream& operator <<(std::ostream& os, const Car& );
+
+};
+#endif //AUTO_CAR_H
